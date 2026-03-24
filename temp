@@ -2,7 +2,7 @@ function out = model
 %
 % magnet_2.m
 %
-% Model exported on Mar 24 2026, 12:38 by COMSOL 6.3.0.290.
+% Model exported on Mar 24 2026, 13:43 by COMSOL 6.3.0.290.
 
 import com.comsol.model.*
 import com.comsol.model.util.*
@@ -1022,6 +1022,17 @@ model.component('comp1').probe('pdom1').genResult('none');
 
 model.sol('sol1').runAll;
 
+model.result('pg1').run;
+model.result.export('anim1').run;
+model.result('pg1').run;
+model.result('pg1').feature('strmsl1').create('sel1', 'Selection');
+model.result('pg1').feature('strmsl1').feature('sel1').selection.set([2]);
+model.result('pg1').run;
+model.result('pg1').feature('strmsl1').feature('sel1').selection.all;
+model.result('pg1').run;
+model.result('pg1').run;
+model.result('pg1').run;
+model.result('pg1').run;
 model.result('pg1').run;
 model.result.export('anim1').run;
 
