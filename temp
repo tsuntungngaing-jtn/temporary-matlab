@@ -2,7 +2,7 @@ function out = model
 %
 % magnet_2.m
 %
-% Model exported on Mar 24 2026, 17:39 by COMSOL 6.3.0.290.
+% Model exported on Mar 30 2026, 08:22 by COMSOL 6.3.0.290.
 
 import com.comsol.model.*
 import com.comsol.model.util.*
@@ -1159,5 +1159,32 @@ model.result('pg1').run;
 model.result('pg1').run;
 model.result('pg1').run;
 model.result.export('anim1').run;
+model.result('pg1').run;
+
+model.component('comp1').coordSystem.create('sys3', 'Rotated');
+model.component('comp1').coordSystem('sys3').label('Fixed_Ref');
+
+model.result('pg1').run;
+model.result.table('evl3').addRow([0.1448968232246871 -2.0330728423304326E-8 0.03728560603809544 0.001986915040826789], [0 0 0 0]);
+model.result('pg1').run;
+model.result('pg1').run;
+model.result('pg1').feature('sysp1').set('sys', 'sys3');
+model.result('pg1').feature('sysp1').set('scale', '0.1');
+
+model.study('std1').createAutoSequences('all');
+
+model.component('comp1').probe('pdom1').genResult('none');
+
+model.sol('sol1').runAll;
+
+model.result('pg1').run;
+model.result('pg1').run;
+model.result('pg1').run;
+model.result('pg1').run;
+model.result('pg1').run;
+model.result.export('anim1').set('fps', 8);
+model.result.export('anim1').run;
+
+model.label('magnet_2.mph');
 
 out = model;
