@@ -2,7 +2,7 @@ function out = model
 %
 % magnet_2.m
 %
-% Model exported on Mar 30 2026, 08:22 by COMSOL 6.3.0.290.
+% Model exported on Mar 31 2026, 08:24 by COMSOL 6.3.0.290.
 
 import com.comsol.model.*
 import com.comsol.model.util.*
@@ -1186,5 +1186,58 @@ model.result.export('anim1').set('fps', 8);
 model.result.export('anim1').run;
 
 model.label('magnet_2.mph');
+
+model.param.rename('Br', 'Br_big');
+model.param.set('Br_big', '1.1684[T]');
+model.param.set('Br_small', '0.1873[T]');
+model.param.set('gap', '30[mm]');
+
+model.component('comp1').geom('geom1').create('cyl2', 'Cylinder');
+model.component('comp1').geom('geom1').feature('cyl2').set('r', '1[mm]');
+model.component('comp1').geom('geom1').feature('cyl2').set('h', '1[mm]');
+
+model.param.rename('H', 'H_Big');
+model.param.rename('D', 'R_big');
+model.param.set('R_big', '25[mm]');
+model.param.set('R_small', '1[mm]');
+model.param.set('T_small', '1[mm]');
+
+model.component('comp1').geom('geom1').feature('cyl2').set('r', 'R_small');
+model.component('comp1').geom('geom1').feature('cyl2').set('h', 'T_small');
+model.component('comp1').geom('geom1').feature('cyl2').set('pos', {'0' 'R_big + gap' '0'});
+model.component('comp1').geom('geom1').feature('cyl2').setIndex('pos', '-0.5[mm]', 2);
+model.component('comp1').geom('geom1').run('cyl2');
+model.component('comp1').geom('geom1').run('cyl2');
+model.component('comp1').geom('geom1').run('cyl2');
+model.component('comp1').geom('geom1').run('cyl2');
+model.component('comp1').geom('geom1').feature('cyl2').set('axistype', 'y');
+model.component('comp1').geom('geom1').run;
+
+model.component('comp1').physics('mfnc').create('mfcs2', 'MagneticFluxConservationSolid', 3);
+
+model.component('comp1').geom('geom1').runPre('fin');
+
+model.component('comp1').physics('mfnc').feature('mfcs2').selection.all;
+model.component('comp1').physics('mfnc').feature('mfcs2').selection.set([3]);
+model.component('comp1').physics('mfnc').feature('mfcs2').set('ConstitutiveRelationBH', 'RemanentFluxDensity');
+model.component('comp1').physics('mfnc').feature('mfcs2').set('e_crel_BH_RemanentFluxDensity', {'0' 'Br_small' '0'});
+
+model.param.set('rot_angle_small', '0[deg]');
+
+model.component('comp1').coordSystem.create('sys4', 'Rotated');
+model.component('comp1').coordSystem('sys4').set('name', 'sys_small');
+model.component('comp1').coordSystem('sys4').setIndex('origin', '25[mm]+gap', 1);
+
+model.component('comp1').physics('mfnc').feature('mfcs2').set('coordinateSystem', 'sys4');
+
+model.component('comp1').coordSystem('sys4').set('rotationSequence', 'ZYZ');
+model.component('comp1').coordSystem('sys4').set('angle', {'0' 'rot_angle_s' '0'});
+
+model.component('comp1').physics('mfnc').create('fcal1', 'ForceCalculation', 3);
+model.component('comp1').physics('mfnc').feature('fcal1').selection.all;
+model.component('comp1').physics('mfnc').feature('fcal1').selection.set([3]);
+model.component('comp1').physics('mfnc').feature('fcal1').set('TorqueAxis', [0 1 1]);
+model.component('comp1').physics('mfnc').feature('fcal1').set('TorqueRotationPoint', {'0' '25[mm] + gap' '0'});
+model.component('comp1').physics('mfnc').feature('fcal1').set('TorqueAxis', [0 1 0]);
 
 out = model;
