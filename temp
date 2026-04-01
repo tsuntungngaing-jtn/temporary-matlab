@@ -2,7 +2,7 @@ function out = model
 %
 % magnet_2.m
 %
-% Model exported on Mar 31 2026, 16:03 by COMSOL 6.3.0.290.
+% Model exported on Apr 1 2026, 19:59 by COMSOL 6.3.0.290.
 
 import com.comsol.model.*
 import com.comsol.model.util.*
@@ -1291,6 +1291,26 @@ model.result('pg1').run;
 model.result('pg1').feature('sysp1').set('scale', 0.2);
 model.result('pg1').run;
 model.result('pg1').feature('sysp1').set('scale', 0.1);
+model.result('pg1').run;
+model.result('pg1').feature('sysp1').set('data', 'cpt2');
+model.result('pg1').run;
+model.result.export('anim1').run;
+model.result.export('anim1').run;
+
+model.param.set('rot_angle_s', 'rot_angle');
+
+model.result('pg1').run;
+model.result('pg1').feature('sysp1').setIndex('looplevel', 10, 0);
+model.result('pg1').run;
+model.result('pg1').run;
+model.result('pg1').run;
+model.result('pg1').feature('sysp1').setIndex('looplevel', 13, 0);
+model.result('pg1').run;
+model.result('pg1').feature('sysp1').setIndex('looplevel', 16, 0);
+model.result('pg1').run;
+model.result('pg1').feature('sysp1').setIndex('looplevel', 31, 0);
+model.result('pg1').run;
+model.result('pg1').feature('sysp1').setIndex('looplevel', 23, 0);
 model.result('pg1').run;
 
 out = model;
