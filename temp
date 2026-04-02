@@ -2,7 +2,7 @@ function out = model
 %
 % magnet_2.m
 %
-% Model exported on Apr 2 2026, 14:07 by COMSOL 6.3.0.290.
+% Model exported on Apr 2 2026, 14:23 by COMSOL 6.3.0.290.
 
 import com.comsol.model.*
 import com.comsol.model.util.*
@@ -1387,6 +1387,16 @@ model.study('std1').showAutoSequences('all');
 
 model.sol('sol1').createAutoSequence('std1');
 model.sol('sol1').feature('v1').set('initparametersmethod', 'manual');
+
+model.study('std1').createAutoSequences('all');
+
+model.component('comp1').probe('pdom1').genResult('none');
+
+model.component('comp1').coordSystem('sys4').set('rotationSequence', 'ZXY');
+model.component('comp1').coordSystem('sys4').set('angle', {'rot_angle_s' '0' '0'});
+
+model.component('comp1').physics('mfnc').feature('fcal1').set('TorqueAxis', [0 0 1]);
+model.component('comp1').physics('mfnc').feature('ge1').setIndex('equation', 'mfnc.Tz_0', 0, 0);
 
 model.study('std1').createAutoSequences('all');
 
