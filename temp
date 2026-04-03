@@ -2,7 +2,7 @@ function out = model
 %
 % magnet_2.m
 %
-% Model exported on Apr 3 2026, 10:25 by COMSOL 6.3.0.290.
+% Model exported on Apr 3 2026, 13:00 by COMSOL 6.3.0.290.
 
 import com.comsol.model.*
 import com.comsol.model.util.*
@@ -2437,5 +2437,35 @@ model.component('comp1').physics('mfnc').feature('ge1').setIndex('equation', 'I*
 model.study('std1').createAutoSequences('all');
 
 model.component('comp1').probe('pdom1').genResult('none');
+
+model.component('comp1').physics('mfnc').feature('ge1').setIndex('equation', 'I*rot_angle_s_tt + c*rot_angle_s_t - mfnc.Tz_0', 0, 0);
+
+model.param.set('I', '1e-9[kg*m^2]');
+model.param.set('c', '1e-10[N*m*s/rad]');
+
+model.study('std1').createAutoSequences('all');
+
+model.component('comp1').probe('pdom1').genResult('none');
+
+model.component('comp1').physics('mfnc').feature('ge1').setIndex('equation', 'I*utt + c*ut - mfnc.Tz_0', 0, 0);
+model.component('comp1').physics('mfnc').feature('ge1').setIndex('CustomDependentVariableUnit', 'rad', 0, 0);
+
+model.study('std1').createAutoSequences('all');
+
+model.component('comp1').probe('pdom1').genResult('none');
+
+model.component('comp1').physics('mfnc').feature('ge1').setIndex('equation', 'I*rot_angle_stt + c*rot_angle_st - mfnc.Tz_0', 0, 0);
+
+model.study('std1').createAutoSequences('all');
+
+model.component('comp1').probe('pdom1').genResult('none');
+
+model.sol('sol1').feature('t1').create('se1', 'Segregated');
+model.sol('sol1').feature('t1').feature('se1').feature('ssDef').set('segvar', {'comp1_Vm'});
+model.sol('sol1').feature('t1').feature('se1').create('ss1', 'SegregatedStep');
+model.sol('sol1').feature('t1').feature('se1').feature('ss1').set('segvar', {'comp1_ODE1'});
+model.sol('sol1').feature('t1').set('consistent', true);
+model.sol('sol1').feature('t1').set('estrat', 'exclude');
+model.sol('sol1').feature('t1').set('consistent', 'bweuler');
 
 out = model;
