@@ -2,7 +2,7 @@ function out = model
 %
 % magnet_2.m
 %
-% Model exported on Apr 3 2026, 13:15 by COMSOL 6.3.0.290.
+% Model exported on Apr 3 2026, 14:42 by COMSOL 6.3.0.290.
 
 import com.comsol.model.*
 import com.comsol.model.util.*
@@ -2471,5 +2471,265 @@ model.sol('sol1').feature('t1').set('consistent', 'bweuler');
 model.study('std1').createAutoSequences('all');
 
 model.component('comp1').probe('pdom1').genResult('none');
+
+model.sol('sol1').feature('t1').set('consistent', false);
+
+model.component('comp1').func.create('step1', 'Step');
+model.component('comp1').func('step1').set('smooth', 0.001);
+
+model.component('comp1').physics('mfnc').feature('ge1').setIndex('equation', 'I*rot_angle_stt + c*rot_angle_st - mfnc.Tz_0 * step1(t[1/s]', 0, 0);
+
+model.study('std1').showAutoSequences('all');
+
+model.sol.remove('sol2');
+model.sol('sol1').feature('t1').feature('fc1').set('maxiter', 50);
+model.sol('sol1').feature('t1').feature('fc1').set('ntolfact', 10);
+
+model.component('comp1').probe('pdom1').genResult('none');
+
+model.component('comp1').physics('mfnc').feature('ge1').setIndex('equation', 'I*rot_angle_stt + c*rot_angle_st - mfnc.Tz_0 * step1(t[1/s])', 0, 0);
+
+model.study('std1').createAutoSequences('all');
+
+model.component('comp1').probe('pdom1').genResult('none');
+
+model.result.create('pg4', 'PlotGroup3D');
+model.result('pg4').label([native2unicode(hex2dec({'78' 'c1'}), 'unicode')  native2unicode(hex2dec({'90' '1a'}), 'unicode')  native2unicode(hex2dec({'5b' 'c6'}), 'unicode')  native2unicode(hex2dec({'5e' 'a6'}), 'unicode') ' (mfnc)']);
+model.result('pg4').set('data', 'dset3');
+model.result('pg4').setIndex('looplevel', 1, 0);
+model.result('pg4').set('frametype', 'spatial');
+model.result('pg4').set('showlegendsmaxmin', true);
+model.result('pg4').feature.create('mslc1', 'Multislice');
+model.result('pg4').feature('mslc1').set('showsolutionparams', 'on');
+model.result('pg4').feature('mslc1').set('solutionparams', 'parent');
+model.result('pg4').feature('mslc1').set('expr', 'mfnc.normB');
+model.result('pg4').feature('mslc1').set('multiplanexmethod', 'coord');
+model.result('pg4').feature('mslc1').set('xcoord', 'mfnc.CPx');
+model.result('pg4').feature('mslc1').set('multiplaneymethod', 'coord');
+model.result('pg4').feature('mslc1').set('ycoord', 'mfnc.CPy');
+model.result('pg4').feature('mslc1').set('multiplanezmethod', 'coord');
+model.result('pg4').feature('mslc1').set('zcoord', 'mfnc.CPz');
+model.result('pg4').feature('mslc1').set('colortable', 'Prism');
+model.result('pg4').feature('mslc1').set('colortabletrans', 'nonlinear');
+model.result('pg4').feature('mslc1').set('colorcalibration', -0.8);
+model.result('pg4').feature('mslc1').set('showsolutionparams', 'on');
+model.result('pg4').feature('mslc1').set('data', 'parent');
+model.result('pg4').feature.create('strmsl1', 'StreamlineMultislice');
+model.result('pg4').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg4').feature('strmsl1').set('solutionparams', 'parent');
+model.result('pg4').feature('strmsl1').set('multiplanexmethod', 'coord');
+model.result('pg4').feature('strmsl1').set('xcoord', 'mfnc.CPx');
+model.result('pg4').feature('strmsl1').set('multiplaneymethod', 'coord');
+model.result('pg4').feature('strmsl1').set('ycoord', 'mfnc.CPy');
+model.result('pg4').feature('strmsl1').set('multiplanezmethod', 'coord');
+model.result('pg4').feature('strmsl1').set('zcoord', 'mfnc.CPz');
+model.result('pg4').feature('strmsl1').set('titletype', 'none');
+model.result('pg4').feature('strmsl1').set('posmethod', 'uniform');
+model.result('pg4').feature('strmsl1').set('udist', 0.02);
+model.result('pg4').feature('strmsl1').set('maxlen', 0.4);
+model.result('pg4').feature('strmsl1').set('maxsteps', 5000);
+model.result('pg4').feature('strmsl1').set('maxtime', Inf);
+model.result('pg4').feature('strmsl1').set('inheritcolor', false);
+model.result('pg4').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg4').feature('strmsl1').set('maxtime', Inf);
+model.result('pg4').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg4').feature('strmsl1').set('maxtime', Inf);
+model.result('pg4').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg4').feature('strmsl1').set('maxtime', Inf);
+model.result('pg4').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg4').feature('strmsl1').set('maxtime', Inf);
+model.result('pg4').feature('strmsl1').set('data', 'parent');
+model.result('pg4').feature('strmsl1').set('inheritplot', 'mslc1');
+model.result('pg4').feature('strmsl1').feature.create('col1', 'Color');
+model.result('pg4').feature('strmsl1').feature('col1').set('expr', 'mfnc.normB');
+model.result('pg4').feature('strmsl1').feature('col1').set('colortable', 'PrismDark');
+model.result('pg4').feature('strmsl1').feature('col1').set('colorlegend', false);
+model.result('pg4').feature('strmsl1').feature('col1').set('colortabletrans', 'nonlinear');
+model.result('pg4').feature('strmsl1').feature('col1').set('colorcalibration', -0.8);
+model.result('pg4').feature('strmsl1').feature.create('filt1', 'Filter');
+model.result('pg4').feature('strmsl1').feature('filt1').set('expr', '!isScalingSystemDomain');
+model.result.create('pg5', 'PlotGroup3D');
+model.result('pg5').label([native2unicode(hex2dec({'78' 'c1'}), 'unicode')  native2unicode(hex2dec({'68' '07'}), 'unicode')  native2unicode(hex2dec({'52' 'bf'}), 'unicode') ' (mfnc)']);
+model.result('pg5').set('data', 'dset3');
+model.result('pg5').setIndex('looplevel', 1, 0);
+model.result('pg5').set('frametype', 'spatial');
+model.result('pg5').set('showlegendsmaxmin', true);
+model.result('pg5').feature.create('mslc1', 'Multislice');
+model.result('pg5').feature('mslc1').set('showsolutionparams', 'on');
+model.result('pg5').feature('mslc1').set('solutionparams', 'parent');
+model.result('pg5').feature('mslc1').set('multiplanexmethod', 'coord');
+model.result('pg5').feature('mslc1').set('xcoord', 'mfnc.CPx');
+model.result('pg5').feature('mslc1').set('multiplaneymethod', 'coord');
+model.result('pg5').feature('mslc1').set('ycoord', 'mfnc.CPy');
+model.result('pg5').feature('mslc1').set('multiplanezmethod', 'coord');
+model.result('pg5').feature('mslc1').set('zcoord', 'mfnc.CPz');
+model.result('pg5').feature('mslc1').set('colortable', 'Dipole');
+model.result('pg5').feature('mslc1').set('showsolutionparams', 'on');
+model.result('pg5').feature('mslc1').set('data', 'parent');
+model.result('pg5').feature.create('strmsl1', 'StreamlineMultislice');
+model.result('pg5').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg5').feature('strmsl1').set('solutionparams', 'parent');
+model.result('pg5').feature('strmsl1').set('expr', {'mfnc.Hx' 'mfnc.Hy' 'mfnc.Hz'});
+model.result('pg5').feature('strmsl1').set('multiplanexmethod', 'coord');
+model.result('pg5').feature('strmsl1').set('xcoord', 'mfnc.CPx');
+model.result('pg5').feature('strmsl1').set('multiplaneymethod', 'coord');
+model.result('pg5').feature('strmsl1').set('ycoord', 'mfnc.CPy');
+model.result('pg5').feature('strmsl1').set('multiplanezmethod', 'coord');
+model.result('pg5').feature('strmsl1').set('zcoord', 'mfnc.CPz');
+model.result('pg5').feature('strmsl1').set('titletype', 'none');
+model.result('pg5').feature('strmsl1').set('posmethod', 'uniform');
+model.result('pg5').feature('strmsl1').set('udist', 0.02);
+model.result('pg5').feature('strmsl1').set('maxlen', 0.4);
+model.result('pg5').feature('strmsl1').set('maxsteps', 5000);
+model.result('pg5').feature('strmsl1').set('maxtime', Inf);
+model.result('pg5').feature('strmsl1').set('inheritcolor', false);
+model.result('pg5').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg5').feature('strmsl1').set('maxtime', Inf);
+model.result('pg5').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg5').feature('strmsl1').set('maxtime', Inf);
+model.result('pg5').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg5').feature('strmsl1').set('maxtime', Inf);
+model.result('pg5').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg5').feature('strmsl1').set('maxtime', Inf);
+model.result('pg5').feature('strmsl1').set('data', 'parent');
+model.result('pg5').feature('strmsl1').set('inheritplot', 'mslc1');
+model.result('pg5').feature('strmsl1').feature.create('col1', 'Color');
+model.result('pg5').feature('strmsl1').feature('col1').set('colortable', 'DipoleDark');
+model.result('pg5').feature('strmsl1').feature('col1').set('colorlegend', false);
+model.result('pg5').feature('strmsl1').feature.create('filt1', 'Filter');
+model.result('pg5').feature('strmsl1').feature('filt1').set('expr', '!isScalingSystemDomain');
+model.result.remove('pg4');
+model.result.remove('pg5');
+
+model.component('comp1').physics('mfnc').feature('ge1').setIndex('equation', 'I*rot_angle_stt + c*rot_angle_st - mfnc.Tz_0 * step1(t[1/s]', 0, 0);
+
+model.sol('sol2').feature('t1').set('consistent', false);
+model.sol('sol2').feature('v1').feature('comp1_ODE1').set('scalemethod', 'manual');
+model.sol('sol2').feature('v1').feature('comp1_ODE1').set('scaleval', '1e-2');
+model.sol.remove('sol1');
+
+model.param.set('c', '1e-8[N*m*s/rad]');
+
+model.sol('sol2').feature('t1').feature('fc1').set('linsolver', 'dDef');
+model.sol('sol2').feature('t1').feature('fc1').set('maxiter', 50);
+model.sol('sol2').feature('t1').feature('fc1').set('ntolfact', 50);
+
+model.study('std1').createAutoSequences('all');
+
+model.component('comp1').probe('pdom1').genResult('none');
+
+model.component('comp1').physics('mfnc').feature('ge1').setIndex('equation', 'I*rot_angle_stt + c*rot_angle_st - mfnc.Tz_0 * step1(t[1/s])', 0, 0);
+
+model.study('std1').createAutoSequences('all');
+
+model.component('comp1').probe('pdom1').genResult('none');
+
+model.result.create('pg4', 'PlotGroup3D');
+model.result('pg4').label([native2unicode(hex2dec({'78' 'c1'}), 'unicode')  native2unicode(hex2dec({'90' '1a'}), 'unicode')  native2unicode(hex2dec({'5b' 'c6'}), 'unicode')  native2unicode(hex2dec({'5e' 'a6'}), 'unicode') ' (mfnc)']);
+model.result('pg4').set('data', 'dset3');
+model.result('pg4').setIndex('looplevel', 2, 0);
+model.result('pg4').set('frametype', 'spatial');
+model.result('pg4').set('showlegendsmaxmin', true);
+model.result('pg4').feature.create('mslc1', 'Multislice');
+model.result('pg4').feature('mslc1').set('showsolutionparams', 'on');
+model.result('pg4').feature('mslc1').set('solutionparams', 'parent');
+model.result('pg4').feature('mslc1').set('expr', 'mfnc.normB');
+model.result('pg4').feature('mslc1').set('multiplanexmethod', 'coord');
+model.result('pg4').feature('mslc1').set('xcoord', 'mfnc.CPx');
+model.result('pg4').feature('mslc1').set('multiplaneymethod', 'coord');
+model.result('pg4').feature('mslc1').set('ycoord', 'mfnc.CPy');
+model.result('pg4').feature('mslc1').set('multiplanezmethod', 'coord');
+model.result('pg4').feature('mslc1').set('zcoord', 'mfnc.CPz');
+model.result('pg4').feature('mslc1').set('colortable', 'Prism');
+model.result('pg4').feature('mslc1').set('colortabletrans', 'nonlinear');
+model.result('pg4').feature('mslc1').set('colorcalibration', -0.8);
+model.result('pg4').feature('mslc1').set('showsolutionparams', 'on');
+model.result('pg4').feature('mslc1').set('data', 'parent');
+model.result('pg4').feature.create('strmsl1', 'StreamlineMultislice');
+model.result('pg4').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg4').feature('strmsl1').set('solutionparams', 'parent');
+model.result('pg4').feature('strmsl1').set('multiplanexmethod', 'coord');
+model.result('pg4').feature('strmsl1').set('xcoord', 'mfnc.CPx');
+model.result('pg4').feature('strmsl1').set('multiplaneymethod', 'coord');
+model.result('pg4').feature('strmsl1').set('ycoord', 'mfnc.CPy');
+model.result('pg4').feature('strmsl1').set('multiplanezmethod', 'coord');
+model.result('pg4').feature('strmsl1').set('zcoord', 'mfnc.CPz');
+model.result('pg4').feature('strmsl1').set('titletype', 'none');
+model.result('pg4').feature('strmsl1').set('posmethod', 'uniform');
+model.result('pg4').feature('strmsl1').set('udist', 0.02);
+model.result('pg4').feature('strmsl1').set('maxlen', 0.4);
+model.result('pg4').feature('strmsl1').set('maxsteps', 5000);
+model.result('pg4').feature('strmsl1').set('maxtime', Inf);
+model.result('pg4').feature('strmsl1').set('inheritcolor', false);
+model.result('pg4').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg4').feature('strmsl1').set('maxtime', Inf);
+model.result('pg4').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg4').feature('strmsl1').set('maxtime', Inf);
+model.result('pg4').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg4').feature('strmsl1').set('maxtime', Inf);
+model.result('pg4').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg4').feature('strmsl1').set('maxtime', Inf);
+model.result('pg4').feature('strmsl1').set('data', 'parent');
+model.result('pg4').feature('strmsl1').set('inheritplot', 'mslc1');
+model.result('pg4').feature('strmsl1').feature.create('col1', 'Color');
+model.result('pg4').feature('strmsl1').feature('col1').set('expr', 'mfnc.normB');
+model.result('pg4').feature('strmsl1').feature('col1').set('colortable', 'PrismDark');
+model.result('pg4').feature('strmsl1').feature('col1').set('colorlegend', false);
+model.result('pg4').feature('strmsl1').feature('col1').set('colortabletrans', 'nonlinear');
+model.result('pg4').feature('strmsl1').feature('col1').set('colorcalibration', -0.8);
+model.result('pg4').feature('strmsl1').feature.create('filt1', 'Filter');
+model.result('pg4').feature('strmsl1').feature('filt1').set('expr', '!isScalingSystemDomain');
+model.result.create('pg5', 'PlotGroup3D');
+model.result('pg5').label([native2unicode(hex2dec({'78' 'c1'}), 'unicode')  native2unicode(hex2dec({'68' '07'}), 'unicode')  native2unicode(hex2dec({'52' 'bf'}), 'unicode') ' (mfnc)']);
+model.result('pg5').set('data', 'dset3');
+model.result('pg5').setIndex('looplevel', 2, 0);
+model.result('pg5').set('frametype', 'spatial');
+model.result('pg5').set('showlegendsmaxmin', true);
+model.result('pg5').feature.create('mslc1', 'Multislice');
+model.result('pg5').feature('mslc1').set('showsolutionparams', 'on');
+model.result('pg5').feature('mslc1').set('solutionparams', 'parent');
+model.result('pg5').feature('mslc1').set('multiplanexmethod', 'coord');
+model.result('pg5').feature('mslc1').set('xcoord', 'mfnc.CPx');
+model.result('pg5').feature('mslc1').set('multiplaneymethod', 'coord');
+model.result('pg5').feature('mslc1').set('ycoord', 'mfnc.CPy');
+model.result('pg5').feature('mslc1').set('multiplanezmethod', 'coord');
+model.result('pg5').feature('mslc1').set('zcoord', 'mfnc.CPz');
+model.result('pg5').feature('mslc1').set('colortable', 'Dipole');
+model.result('pg5').feature('mslc1').set('showsolutionparams', 'on');
+model.result('pg5').feature('mslc1').set('data', 'parent');
+model.result('pg5').feature.create('strmsl1', 'StreamlineMultislice');
+model.result('pg5').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg5').feature('strmsl1').set('solutionparams', 'parent');
+model.result('pg5').feature('strmsl1').set('expr', {'mfnc.Hx' 'mfnc.Hy' 'mfnc.Hz'});
+model.result('pg5').feature('strmsl1').set('multiplanexmethod', 'coord');
+model.result('pg5').feature('strmsl1').set('xcoord', 'mfnc.CPx');
+model.result('pg5').feature('strmsl1').set('multiplaneymethod', 'coord');
+model.result('pg5').feature('strmsl1').set('ycoord', 'mfnc.CPy');
+model.result('pg5').feature('strmsl1').set('multiplanezmethod', 'coord');
+model.result('pg5').feature('strmsl1').set('zcoord', 'mfnc.CPz');
+model.result('pg5').feature('strmsl1').set('titletype', 'none');
+model.result('pg5').feature('strmsl1').set('posmethod', 'uniform');
+model.result('pg5').feature('strmsl1').set('udist', 0.02);
+model.result('pg5').feature('strmsl1').set('maxlen', 0.4);
+model.result('pg5').feature('strmsl1').set('maxsteps', 5000);
+model.result('pg5').feature('strmsl1').set('maxtime', Inf);
+model.result('pg5').feature('strmsl1').set('inheritcolor', false);
+model.result('pg5').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg5').feature('strmsl1').set('maxtime', Inf);
+model.result('pg5').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg5').feature('strmsl1').set('maxtime', Inf);
+model.result('pg5').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg5').feature('strmsl1').set('maxtime', Inf);
+model.result('pg5').feature('strmsl1').set('showsolutionparams', 'on');
+model.result('pg5').feature('strmsl1').set('maxtime', Inf);
+model.result('pg5').feature('strmsl1').set('data', 'parent');
+model.result('pg5').feature('strmsl1').set('inheritplot', 'mslc1');
+model.result('pg5').feature('strmsl1').feature.create('col1', 'Color');
+model.result('pg5').feature('strmsl1').feature('col1').set('colortable', 'DipoleDark');
+model.result('pg5').feature('strmsl1').feature('col1').set('colorlegend', false);
+model.result('pg5').feature('strmsl1').feature.create('filt1', 'Filter');
+model.result('pg5').feature('strmsl1').feature('filt1').set('expr', '!isScalingSystemDomain');
+model.result.remove('pg4');
+model.result.remove('pg5');
 
 out = model;
